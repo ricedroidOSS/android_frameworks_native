@@ -541,6 +541,21 @@ TEST_F(ScreenCaptureTest, CaptureTooLargeLayer) {
     ASSERT_EQ(BAD_VALUE, ScreenCapture::captureLayers(captureArgs, captureResults));
 }
 
+TEST_F(ScreenCaptureTest, CaptureTooLargeLayer) {
+    sp<SurfaceControl> redLayer = createLayer(String8("Red surface"), 60, 60);
+    ASSERT_NO_FATAL_FAILURE(fillBufferQueueLayerColor(redLayer, Color::RED, 60, 60));
+
+    Transaction().show(redLayer).setLayer(redLayer, INT32_MAX).apply(true);
+
+    LayerCaptureArgs captureArgs;
+    captureArgs.layerHandle = redLayer->getHandle();
+    captureArgs.frameScaleX = INT32_MAX / 60;
+    captureArgs.frameScaleY = INT32_MAX / 60;
+
+    ScreenCaptureResults captureResults;
+    ASSERT_EQ(BAD_VALUE, ScreenCapture::captureLayers(captureArgs, captureResults));
+}
+
 TEST_F(ScreenCaptureTest, CaptureSecureLayer) {
     sp<SurfaceControl> redLayer = createLayer(String8("Red surface"), 60, 60,
                                               ISurfaceComposerClient::eFXSurfaceBufferState);
