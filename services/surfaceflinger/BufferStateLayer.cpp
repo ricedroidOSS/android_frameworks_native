@@ -471,8 +471,8 @@ bool BufferStateLayer::setBuffer(const std::shared_ptr<renderengine::ExternalTex
 
     setFrameTimelineVsyncForBufferTransaction(info, postTime);
 
-    if (buffer && dequeueTime && *dequeueTime != 0) {
-        const uint64_t bufferId = buffer->getBuffer()->getId();
+    if (dequeueTime && *dequeueTime != 0) {
+        const uint64_t bufferId = mDrawingState.buffer->getBuffer()->getId();
         mFlinger->mFrameTracer->traceNewLayer(layerId, getName().c_str());
         mFlinger->mFrameTracer->traceTimestamp(layerId, bufferId, frameNumber, *dequeueTime,
                                                FrameTracer::FrameEvent::DEQUEUE);
