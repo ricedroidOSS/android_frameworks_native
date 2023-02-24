@@ -270,6 +270,12 @@ void KeyCharacterMap::combine(const KeyCharacterMap& overlay) {
     mLayoutOverlayApplied = true;
 }
 
+void KeyCharacterMap::reloadBaseIfNeed() {
+    if (mLayoutOverlayApplied) {
+        reloadBaseFromFile();
+    }
+}
+
 KeyCharacterMap::KeyboardType KeyCharacterMap::getKeyboardType() const {
     return mType;
 }

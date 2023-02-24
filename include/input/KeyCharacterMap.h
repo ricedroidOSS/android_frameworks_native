@@ -87,6 +87,9 @@ public:
     /* Combines this key character map with the provided overlay. */
     void combine(const KeyCharacterMap& overlay);
 
+    /* Reloads the data from mLoadFileName and unapplies any overlay after reset layout. */
+    void reloadBaseIfNeed();
+
     /* Gets the keyboard type. */
     KeyboardType getKeyboardType() const;
 

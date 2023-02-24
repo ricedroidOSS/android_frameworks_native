@@ -1310,6 +1310,10 @@ bool EventHub::setKeyboardLayoutOverlay(int32_t deviceId, std::shared_ptr<KeyCha
     std::scoped_lock _l(mLock);
     Device* device = getDeviceLocked(deviceId);
     if (device == nullptr || map == nullptr || device->keyMap.keyCharacterMap == nullptr) {
+        if (device != nullptr && device->keyMap.keyCharacterMap != nullptr) {
+            // reload data after reset layout
+            device->keyMap.keyCharacterMap->reloadBaseIfNeed();
+        }
         return false;
     }
     device->keyMap.keyCharacterMap->combine(*map);
